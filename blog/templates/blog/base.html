@@ -1,0 +1,27 @@
+{% load blog_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %} {% endblock %}</title>
+        <link href="{% static 'css/blog.css' %}" rel="stylesheet"/>
+    </head>
+    <body>
+        <div>
+            <a href="{% url 'blog:home' %}">Home</a>
+            <a href="{% url 'blog:about_page' %}">About</a>
+            <a href="{% url 'blog:contact_page' %}">Contact</a>
+        </div>
+        <div id="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+        <div id="sidebar">
+            <h2>My Blog</h2>
+            <p>This is my Blog</p>
+        </div>
+        <div id="bottombar">
+            <a href="{% url 'blog:post_feed' %}">Subscribe to my RSS feed</a>
+        </div>
+    </body>
+</html>
