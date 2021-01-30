@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
     'ckeditor',
-    'ckeditor_uploader'
+    'ckeditor_uploader',
+    'django.contrib.postgres',
 ]
 
 CKEDITOR_UPLOAD_PATH = 'uploads/'
@@ -136,3 +137,5 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = '/media/'
 
 SITE_ID = 1
+
+CKEDITOR_UPLOAD_PATH = MEDIA_ROOT

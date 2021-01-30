@@ -8,9 +8,9 @@
     </head>
     <body>
         <div>
-            <a href="{% url 'blog:home' %}">Home</a>
-            <a href="{% url 'blog:about_page' %}">About</a>
-            <a href="{% url 'blog:contact_page' %}">Contact</a>
+            <h2><a href="{% url 'blog:home' %}">Home</a></h2>
+            <h2><a href="{% url 'blog:about_page' %}">About</a></h2>
+            <h2><a href="{% url 'blog:contact_page' %}">Contact</a></h2>
         </div>
         <div id="content">
             {% block content %}

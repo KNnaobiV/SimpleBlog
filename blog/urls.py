@@ -15,4 +15,5 @@ urlpatterns = [
     path('contact/', views.contact_view, name='contact_page'),
     #path('contact/', ContactView.as_view(), name='contact_page'),
     path('feed/', LatestPostsFeed(), name='post_feed'),
+    path('search/', views.post_search, name='post_search')
 ]

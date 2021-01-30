@@ -4,7 +4,11 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import ListView, DetailView
 from taggit.models import Tag
 from django.db.models import Count
-from .forms import CommentForm
+from .forms import CommentForm, SearchForm
+from django.contrib.postgres.search import (SearchVector, SearchQuery, 
+SearchRank, TrigramSimilarity)
+
+
 
 # Create your views here.
 #CLASS BASED VIEWS
@@ -76,4 +80,26 @@ def post_detail(request, year, month, day, post):
     return render(request, 'blog/post/detail.html', {'post': post, 
                   'similar_posts': similar_posts, 'comments': comments, 
                   'new_comment': new_comment, 'comment_form': comment_form})
-    
+
+
+def post_search(request):
+    """
+    Fucntion for trigram search.
+    """
+    form = SearchForm()
+    query = None
+    results = []
+    if 'query' in request.GET:
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            search_vector = SearchVector('title', weight='A') + \
+                SearchVector('body', weight='B')
+            search_query = SearchQuery(query)
+            results = Post.published.annotate(
+                #search=search_vector, 
+                similarity=TrigramSimilarity('title', 'query'),
+                #rank=SearchRank(search_vector, search_query)
+            ).filter(similarity__gt=0.1).order_by('-similarity')
+    return render(request, 'blog/post/search.html',
+        {'form': form, 'query': query, 'requests': request})
